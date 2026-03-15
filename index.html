@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Grammar Practice • Unit 6 + Present Simple Review</title>
+  <title>Grammar Practice • Unit 6 + Present Simple</title>
   <style>
     :root{
       --bg:#08142d;
@@ -322,7 +322,7 @@
   const TOTAL_TIME_SEC = 6 * 60;
 
   // ---------------------------
-  // VOCAB MEANING (few only)
+  // VOCAB MEANING
   // ---------------------------
   const vocabMCQ = [
     {
@@ -376,7 +376,7 @@
   ];
 
   // ---------------------------
-  // SPELLING (same layout style)
+  // SPELLING
   // ---------------------------
   const spelling = [
     { id:"s_slice", word:"SLICE", hint:"To cut into pieces." },
@@ -581,13 +581,24 @@
       section:"Sentence Tasks",
       qtype:"Unscramble the sentence (click words)",
       prompt:"Click the words in the correct order.",
-      target:["Don’t","touch","it","."],
-      tiles:["it",".","Don’t","touch"],
-      success:"Correct. Negative imperative = Don’t + verb.",
-      clue:"Start with Don’t. Then add the base verb."
+      target:["Please","sit","down","."],
+      tiles:["down","Please","sit","."],
+      success:"Correct! Imperatives use the base verb.",
+      clue:"Start with 'Please'."
     },
     {
       id:"t_unscramble2",
+      type:"tile",
+      section:"Sentence Tasks",
+      qtype:"Unscramble the sentence (click words)",
+      prompt:"Click the words in the correct order.",
+      target:["Don’t","touch","it","."],
+      tiles:["it",".","Don’t","touch"],
+      success:"Correct! Negative imperative = Don't + verb.",
+      clue:"Negative commands start with 'Don't'."
+    },
+    {
+      id:"t_unscramble3",
       type:"tile",
       section:"Sentence Tasks",
       qtype:"Unscramble the sentence (click words)",
@@ -596,34 +607,6 @@
       tiles:["every","goes","She",".","to","school","day"],
       success:"Correct. She → goes.",
       clue:"Start with the subject. Then use the correct verb form."
-    },
-    {
-      id:"t_find_mistake1",
-      type:"mistake",
-      section:"Sentence Tasks",
-      qtype:"Find the mistake (replace the wrong word)",
-      prompt:"Click the one wrong word. Then choose the correct word to replace it.",
-      sentenceWords:["Please","to","sit","down","."],
-      wrongIndex:1,
-      replacements:["sit","don’t","look","go"],
-      correctSentence:"Please sit down.",
-      correctWords:["Please","sit","sit","down","."],
-      success:"Correct. Imperatives use the base verb, not to + verb.",
-      clue:"Commands usually use the base verb: Sit down. Open the book."
-    },
-    {
-      id:"t_find_mistake2",
-      type:"mistake",
-      section:"Sentence Tasks",
-      qtype:"Find the mistake (replace the wrong word)",
-      prompt:"Click the one wrong word. Then choose the correct word to replace it.",
-      sentenceWords:["He","play","football","after","school","."],
-      wrongIndex:1,
-      replacements:["plays","playing","played","is"],
-      correctSentence:"He plays football after school.",
-      correctWords:["He","plays","football","after","school","."],
-      success:"Correct. He/She/It → add -s.",
-      clue:"For he / she / it, the verb usually needs -s."
     }
   ];
 
@@ -1089,157 +1072,6 @@
     taskTxt.textContent = "Sentence Tasks";
   }
 
-  // ---------- RENDER FIND MISTAKE ----------
-  function renderMistake(item){
-    sectionTitle.textContent = item.section;
-    sectionTag.textContent = item.qtype;
-
-    const id = item.id;
-    attempts.set(id, attempts.get(id) || 0);
-
-    let words = item.sentenceWords.slice();
-    let pickedWrong = false;
-    let chosenReplacement = null;
-    let lockedCorrect = false;
-
-    cardArea.innerHTML = `
-      <div class="qtype">${item.qtype}</div>
-      <div class="prompt">${item.prompt}</div>
-
-      <div class="tileRow" id="words"></div>
-
-      <div class="reviewBox" id="replaceBox" style="display:none;">
-        <b>Replace with:</b>
-        <div class="tileRow" id="replaceChoices" style="margin-top:10px;"></div>
-        <div class="controls" style="margin-top:14px;">
-          <button class="smallbtn secondary" id="checkBtn" disabled>Check</button>
-        </div>
-      </div>
-
-      <div class="emojiRow" id="emojiRow"></div>
-      <div class="feedback" id="fb"><span class="hint">Click the wrong word first.</span></div>
-
-      <div class="controls">
-        <button class="smallbtn secondary" id="hintBtn">Hint</button>
-        <button class="smallbtn" id="nextBtn" disabled>Next</button>
-      </div>
-    `;
-
-    const wordsDiv = document.getElementById("words");
-    const replaceBox = document.getElementById("replaceBox");
-    const replaceChoices = document.getElementById("replaceChoices");
-    const checkBtn = document.getElementById("checkBtn");
-    const fb = document.getElementById("fb");
-    const emojiRow = document.getElementById("emojiRow");
-    const hintBtn = document.getElementById("hintBtn");
-    const nextBtn = document.getElementById("nextBtn");
-
-    function setSmileys(level){
-      if (level <= 0) emojiRow.textContent = "";
-      else if (level === 1) emojiRow.textContent = "🙂";
-      else if (level === 2) emojiRow.textContent = "🙂🙂";
-      else emojiRow.textContent = "😄😄😄";
-    }
-
-    function renderWords(){
-      wordsDiv.innerHTML = "";
-      words.forEach((w, i) => {
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "tile";
-        btn.textContent = w;
-
-        btn.addEventListener("click", () => {
-          if (lockedCorrect) return;
-
-          if (!pickedWrong){
-            attempts.set(id, (attempts.get(id) || 0) + 1);
-
-            if (i === item.wrongIndex){
-              pickedWrong = true;
-              btn.classList.add("selected");
-              fb.innerHTML = `<span class="good"><b>Good catch.</b></span> Now choose the correct word to replace it.`;
-              replaceBox.style.display = "block";
-              renderReplacementChoices();
-            } else {
-              markWrong(item);
-              setSmileys(0);
-              fb.innerHTML = `<span class="hint"><b>Try again:</b> ${item.clue}</span>`;
-            }
-
-            setProgressUI();
-          }
-        });
-
-        wordsDiv.appendChild(btn);
-      });
-    }
-
-    function renderReplacementChoices(){
-      replaceChoices.innerHTML = "";
-      item.replacements.forEach(rep => {
-        const b = document.createElement("button");
-        b.type = "button";
-        b.className = "tile";
-        b.textContent = rep;
-
-        b.addEventListener("click", () => {
-          if (lockedCorrect) return;
-          chosenReplacement = rep;
-
-          [...replaceChoices.querySelectorAll(".tile")].forEach(x => x.classList.remove("selected"));
-          b.classList.add("selected");
-
-          words[item.wrongIndex] = rep;
-          renderWords();
-
-          checkBtn.disabled = false;
-          fb.innerHTML = `<span class="hint">Now click <b>Check</b>.</span>`;
-        });
-
-        replaceChoices.appendChild(b);
-      });
-    }
-
-    checkBtn.addEventListener("click", () => {
-      if (lockedCorrect) return;
-
-      attempts.set(id, (attempts.get(id) || 0) + 1);
-
-      const ok = Array.isArray(item.correctWords) && (words.join(" ") === item.correctWords.join(" "));
-      if (ok){
-        lockedCorrect = true;
-        score += 1; correct += 1;
-
-        const a = attempts.get(id);
-        setSmileys(a === 1 ? 3 : a === 2 ? 2 : 1);
-
-        fb.innerHTML = `<span class="good"><b>Correct!</b></span> ${item.success || ""}<br/>
-                        ✅ <b>${item.correctSentence}</b>`;
-        nextBtn.disabled = false;
-      } else {
-        markWrong(item);
-        setSmileys(0);
-        fb.innerHTML = `<span class="bad"><b>Not yet.</b></span> <span class="hint">Read the clue and choose again.</span><br/>
-                        <span class="hint"><b>Clue:</b> ${item.clue}</span>`;
-      }
-
-      setProgressUI();
-    });
-
-    hintBtn.addEventListener("click", () => {
-      attempts.set(id, (attempts.get(id) || 0) + 1);
-      markWrong(item);
-      fb.innerHTML = `<span class="hint"><b>Hint:</b> ${item.clue}</span>`;
-      setProgressUI();
-    });
-
-    nextBtn.addEventListener("click", () => next());
-
-    taskTxt.textContent = "Sentence Tasks";
-    renderWords();
-  }
-
   function render(){
     doneBox.style.display = "none";
     cardArea.style.display = "block";
@@ -1252,7 +1084,6 @@
     if (item.type === "mcq") renderMCQ(item);
     else if (item.type === "spell") renderSpell(item);
     else if (item.type === "tile") renderTile(item);
-    else if (item.type === "mistake") renderMistake(item);
     else renderMCQ(item);
   }
 
@@ -1266,7 +1097,8 @@
     reviewMode = true;
     sequence = wrongList;
     idx = 0;
-    score = 0; correct = 0;
+    score = 0;
+    correct = 0;
     stopTimer();
     timeTxt.textContent = "Review";
     doneBox.style.display = "none";
@@ -1276,9 +1108,13 @@
 
   // ---------- RESTART ----------
   restartBtn.addEventListener("click", () => {
-    idx = 0; score = 0; correct = 0;
+    idx = 0;
+    score = 0;
+    correct = 0;
     timer = TOTAL_TIME_SEC;
-    wrongIds.clear(); wrongWords.clear(); wrongGrammar.clear();
+    wrongIds.clear();
+    wrongWords.clear();
+    wrongGrammar.clear();
     attempts.clear();
     reviewMode = false;
     sequence = ALL.slice();

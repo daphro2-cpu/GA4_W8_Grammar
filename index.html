@@ -1,254 +1,1298 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Grammar Practice</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Grammar Practice • Unit 6 + Present Simple Review</title>
+  <style>
+    :root{
+      --bg:#08142d;
+      --panel:#122348;
+      --card:#091632;
+      --ink:#f3f4f6;
+      --muted:#9ca3af;
+      --line:#233763;
+      --good:#22c55e;
+      --bad:#ef4444;
+      --warn:#f59e0b;
+      --accent:#60a5fa;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Century Gothic", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 700px at 20% 10%, #14295a 0%, var(--bg) 60%);
+      color:var(--ink);
+    }
+    .wrap{max-width:1360px;margin:0 auto;padding:20px 18px 40px}
 
-<style>
+    header{
+      display:flex;gap:14px;align-items:flex-start;justify-content:space-between;
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(96,165,250,.12), rgba(96,165,250,.03));
+      padding:18px;border-radius:22px;
+    }
+    .brand{display:flex;gap:18px;align-items:flex-start;min-width:0}
+    .logo{
+      width:106px;height:106px;object-fit:contain;border-radius:20px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(11,18,38,.45);
+      padding:8px;flex:0 0 auto;
+    }
+    h1{margin:0;font-size:24px;letter-spacing:.2px}
+    .sub{margin-top:8px;color:var(--muted);font-size:15px;line-height:1.4}
 
-body{
-background:#0e1628;
-color:white;
-font-family:Arial;
-display:flex;
-justify-content:center;
-padding-top:60px;
-}
+    .meta{display:flex;flex-direction:column;gap:10px;align-items:flex-end;min-width:360px}
+    .pillrow{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+    .pill{
+      font-size:16px;border:1px solid var(--line);background: rgba(17,28,51,.7);
+      padding:12px 18px;border-radius:999px;user-select:none;
+      color:#fff;
+    }
+    .pill b{color:#fff}
+    .bar{
+      width:360px;height:16px;background: rgba(255,255,255,.07);
+      border-radius:999px;overflow:hidden;border:1px solid rgba(255,255,255,.10);
+    }
+    .bar>div{
+      height:100%;width:0%;
+      background: linear-gradient(90deg, #60a5fa, #34d399);
+      transition: width .25s ease;
+    }
 
-.container{
-background:#16233a;
-width:600px;
-padding:30px;
-border-radius:12px;
-box-shadow:0 0 10px rgba(0,0,0,0.5);
-}
+    main{
+      margin-top:22px;
+      display:grid;
+      grid-template-columns:1.55fr 1fr;
+      gap:18px
+    }
+    @media (max-width: 980px){
+      main{grid-template-columns:1fr}
+      .meta{align-items:flex-start;min-width:0}
+      .pillrow{justify-content:flex-start}
+      .bar{width:100%}
+    }
 
-h1{
-text-align:center;
-margin-bottom:25px;
-}
+    .panel{
+      border:1px solid var(--line);
+      background: rgba(17,28,51,.5);
+      border-radius:24px;
+      padding:18px;
+    }
+    .panel h2{
+      margin:0 0 16px;
+      font-size:22px;color:#fff;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+    }
+    .tag{
+      font-size:14px;color:var(--muted);
+      border:1px solid var(--line);
+      background: rgba(11,18,38,.7);
+      padding:8px 14px;border-radius:999px;
+    }
 
-.question{
-font-size:20px;
-margin-bottom:20px;
-}
+    .card{
+      border:1px solid var(--line);
+      background: rgba(9,22,50,.75);
+      border-radius:22px;
+      padding:22px;
+      min-height:560px;
+    }
+    .qtype{font-size:15px;color:var(--muted);margin-bottom:10px}
+    .prompt{font-size:24px;line-height:1.38;margin:0 0 12px}
+    .sentence{
+      font-size:18px;color:#d7e4ff;
+      border-left:4px solid rgba(96,165,250,.6);
+      padding-left:12px;margin:12px 0 16px;line-height:1.5;
+    }
 
-.options button{
-display:block;
-width:100%;
-margin:8px 0;
-padding:12px;
-font-size:16px;
-background:#1f2f4d;
-color:white;
-border:none;
-border-radius:8px;
-cursor:pointer;
-}
+    .choices{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      margin-top:18px;
+    }
+    @media (max-width: 700px){ .choices{grid-template-columns:1fr} }
 
-.options button:hover{
-background:#2d4370;
-}
+    button.choice, button.smallbtn{
+      width:100%;
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(36,56,98,.95), rgba(36,56,98,.65));
+      color:var(--ink);
+      border-radius:18px;
+      padding:16px 18px;
+      font-size:18px;
+      text-align:left;
+      cursor:pointer;
+      transition: transform .05s ease, border-color .2s ease, background .2s ease;
+      user-select:none;
+    }
+    button.choice:hover{border-color: rgba(96,165,250,.6)}
+    button.choice:active{transform: translateY(1px)}
+    button.choice[disabled]{opacity:.7;cursor:not-allowed}
+    button.choice.correct{
+      border-color: rgba(34,197,94,.7);
+      background: linear-gradient(180deg, rgba(34,197,94,.22), rgba(36,56,98,.65));
+    }
+    button.choice.wrong{
+      border-color: rgba(239,68,68,.7);
+      background: linear-gradient(180deg, rgba(239,68,68,.20), rgba(36,56,98,.65));
+    }
 
-.controls{
-margin-top:20px;
-display:flex;
-justify-content:space-between;
-}
+    .feedback{
+      margin-top:22px;
+      font-size:16px;color:var(--muted);
+      line-height:1.5;
+      min-height:28px;
+    }
+    .feedback b{color:#fff}
+    .feedback .good{color: var(--good)}
+    .feedback .bad{color: var(--bad)}
+    .feedback .hint{color: #d5def0}
 
-.controls button{
-padding:10px 20px;
-border:none;
-border-radius:8px;
-cursor:pointer;
-background:#2d4370;
-color:white;
-}
+    .controls{display:flex;gap:14px;margin-top:24px;flex-wrap:wrap}
+    .smallbtn{
+      text-align:left;font-size:18px;padding:16px 18px;
+      background: linear-gradient(180deg, rgba(36,56,98,.95), rgba(36,56,98,.65));
+      border-color: rgba(255,255,255,.10);
+      max-width:none;
+    }
+    .smallbtn.secondary{
+      background: linear-gradient(180deg, rgba(36,56,98,.95), rgba(36,56,98,.65));
+      border-color: rgba(255,255,255,.10);
+    }
+    .smallbtn[disabled]{opacity:.5;cursor:not-allowed}
 
-.result{
-text-align:center;
-font-size:22px;
-margin-top:20px;
-}
+    .tileRow{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+    .tile{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(36,56,98,.7);
+      padding:12px 14px;border-radius:999px;
+      cursor:pointer;user-select:none;font-size:18px;
+      transition: transform .05s ease, border-color .2s ease;
+    }
+    .tile:hover{border-color: rgba(96,165,250,.6)}
+    .tile:active{transform: translateY(1px)}
+    .tile.selected{
+      border-color: rgba(34,197,94,.7);
+      background: rgba(34,197,94,.18);
+    }
 
-</style>
+    .answerBox{
+      border:1px dashed rgba(255,255,255,.18);
+      border-radius:18px;
+      padding:14px;
+      min-height:64px;
+      display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+      background: rgba(11,18,38,.35);
+      margin-top:12px;
+    }
+    .ghost{color: rgba(156,163,175,.9);font-size:15px}
+
+    .sideBox{display:flex;flex-direction:column;gap:14px}
+    .stat{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 16px;border-radius:18px;
+      border:1px solid var(--line);
+      background: rgba(11,18,38,.55);
+      font-size:18px;
+    }
+    .stat b{color:#fff}
+    .list{margin:0;padding-left:22px;color:var(--muted);font-size:16px;line-height:1.5}
+    .note{
+      font-size:15px;color:var(--muted);line-height:1.45;
+      border-left:4px solid rgba(245,158,11,.55);padding-left:12px;
+    }
+
+    .emojiRow{font-size: 24px; line-height: 1; margin-top: 12px; min-height: 30px}
+
+    .done{
+      display:none;margin-top:10px;padding:16px;border-radius:18px;
+      border:1px solid rgba(34,197,94,.35);
+      background: rgba(34,197,94,.10);
+    }
+    .done h3{margin:0 0 8px;font-size:20px}
+    .done p{margin:0;color:var(--muted);font-size:16px;line-height:1.5}
+    .reviewBox{
+      margin-top:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(11,18,38,.55);
+      border-radius:16px;
+      padding:14px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    .reviewBox b{color:#fff}
+    .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+    .chip{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(36,56,98,.55);
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:14px;
+      color: var(--ink);
+    }
+  </style>
 </head>
-
 <body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <img src="logo.png" alt="Logo" class="logo" />
+        <div>
+          <h1>Grammar Practice • Unit 6 + Present Simple</h1>
+          <div class="sub">
+            Read the clue. Then click <b>Next</b> when you are ready.<br/>
+            Vocabulary + spelling, then grammar + sentence tasks.
+          </div>
+        </div>
+      </div>
 
-<div class="container">
+      <div class="meta">
+        <div class="pillrow">
+          <div class="pill"><b>Progress</b> <span id="progTxt">0/0</span></div>
+          <div class="pill"><b>Score</b> <span id="scoreTxt">0</span></div>
+          <div class="pill"><b>Time</b> <span id="timeTxt">06:00</span></div>
+        </div>
+        <div class="bar"><div id="progBar"></div></div>
+      </div>
+    </header>
 
-<h1>Grammar Practice</h1>
+    <main>
+      <section class="panel">
+        <h2>
+          <span id="sectionTitle">Loading…</span>
+          <span class="tag" id="sectionTag">Practice</span>
+        </h2>
 
-<div id="questionBox"></div>
+        <div class="card" id="cardArea"></div>
 
-<div class="controls">
-<button onclick="nextQuestion()">Next</button>
-</div>
+        <div class="done" id="doneBox">
+          <h3>Finished!</h3>
+          <p id="endMsg"></p>
 
-<div class="result" id="result"></div>
+          <div class="reviewBox" id="reviewBox"></div>
 
-</div>
+          <div class="controls">
+            <button class="smallbtn secondary" id="reviewWrongBtn">Practice Review (Only What I Missed)</button>
+            <button class="smallbtn" id="restartBtn">Restart</button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel sideBox">
+        <h2>Quick Info <span class="tag">Unit 6 + PS</span></h2>
+
+        <div class="stat"><span>Current task</span> <b id="taskTxt">—</b></div>
+        <div class="stat"><span>Correct / Total</span> <b><span id="correctTxt">0</span>/<span id="totalTxt">0</span></b></div>
+
+        <div class="note">
+          <b>How to play:</b><br/>
+          • Click an answer.<br/>
+          • If wrong: read the clue and try again.<br/>
+          • Click <b>Next</b> only when you understand.
+        </div>
+
+        <div id="vocabBox">
+          <div class="tag" style="display:inline-block;margin-bottom:8px;">Vocabulary list</div>
+          <ul class="list">
+            <li>slice, peel, blender</li>
+            <li>recipe, fruit cocktail, cream</li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="tag" style="display:inline-block;margin-bottom:8px;">Grammar focus</div>
+          <ul class="list">
+            <li>Imperatives: positive / negative</li>
+            <li>Let’s + verb</li>
+            <li>Object pronouns: me / him / her / us / them</li>
+            <li>Present simple: habits / routines / facts</li>
+            <li>Sentence patterns</li>
+            <li>3rd person -s spelling</li>
+          </ul>
+        </div>
+      </aside>
+    </main>
+  </div>
 
 <script>
+(() => {
+  const TOTAL_TIME_SEC = 6 * 60;
 
-const quiz = [
+  // ---------------------------
+  // VOCAB MEANING (few only)
+  // ---------------------------
+  const vocabMCQ = [
+    {
+      id:"v_slice",
+      type:"mcq",
+      section:"Vocabulary",
+      qtype:"Meaning in context",
+      prompt:"What does <b>slice</b> mean here?",
+      sentence:"“Slice the fruit.”",
+      choices:[
+        {t:"cut into pieces", ok:true},
+        {t:"drink quickly", ok:false},
+        {t:"put in a bag", ok:false},
+        {t:"wash with water", ok:false}
+      ],
+      success:"Correct. To slice means to cut something into pieces.",
+      clue:"Look at the fruit recipe. What do we do with a knife?"
+    },
+    {
+      id:"v_peel",
+      type:"mcq",
+      section:"Vocabulary",
+      qtype:"Meaning in context",
+      prompt:"What does <b>peel</b> mean here?",
+      sentence:"“Peel the fruit.”",
+      choices:[
+        {t:"take the skin off", ok:true},
+        {t:"wash it", ok:false},
+        {t:"eat it", ok:false},
+        {t:"draw it", ok:false}
+      ],
+      success:"Yes. Peel = take the skin off.",
+      clue:"We peel oranges, bananas, apples… we take off the outside."
+    },
+    {
+      id:"v_blender",
+      type:"mcq",
+      section:"Vocabulary",
+      qtype:"Meaning in context",
+      prompt:"What is a <b>blender</b>?",
+      sentence:"“Put the fruit into a blender.”",
+      choices:[
+        {t:"a machine that mixes food or drinks", ok:true},
+        {t:"a kind of plate", ok:false},
+        {t:"a school bag", ok:false},
+        {t:"a knife", ok:false}
+      ],
+      success:"Correct. A blender mixes food and drinks.",
+      clue:"You put fruit in it, push a button, and it mixes."
+    }
+  ];
 
-{
-q:"Choose the correct imperative:",
-options:[
-"Don’t open the door.",
-"Not open the door.",
-"No open the door."
-],
-answer:0
-},
+  // ---------------------------
+  // SPELLING (same layout style)
+  // ---------------------------
+  const spelling = [
+    { id:"s_slice", word:"SLICE", hint:"To cut into pieces." },
+    { id:"s_peel", word:"PEEL", hint:"Take the skin off." },
+    { id:"s_blender", word:"BLENDER", hint:"A machine that mixes fruit or drinks." }
+  ].map(s => ({
+    ...s,
+    type:"spell",
+    section:"Vocabulary",
+    qtype:"Spelling (click letters)"
+  }));
 
-{
-q:"Which sentence is correct?",
-options:[
-"Let’s go to the park.",
-"Let’s goes to the park.",
-"Let’s going to the park."
-],
-answer:0
-},
+  // ---------------------------
+  // GRAMMAR
+  // ---------------------------
+  const grammar = [
+    {
+      id:"g_imp_positive",
+      type:"mcq",
+      section:"Grammar",
+      qtype:"Imperatives",
+      prompt:"Choose the correct sentence.",
+      sentence:"(A teacher command)",
+      choices:[
+        {t:"Open your books on page 10.", ok:true},
+        {t:"Opens your books on page 10.", ok:false},
+        {t:"Opening your books on page 10.", ok:false},
+        {t:"To open your books on page 10.", ok:false}
+      ],
+      success:"Correct. Imperatives use the base verb.",
+      clue:"Commands use the base verb: open, look, listen, stop."
+    },
+    {
+      id:"g_imp_negative",
+      type:"mcq",
+      section:"Grammar",
+      qtype:"Imperatives",
+      prompt:"Choose the correct negative imperative.",
+      sentence:"(You want someone not to shout.)",
+      choices:[
+        {t:"Don’t shout!", ok:true},
+        {t:"Not shout!", ok:false},
+        {t:"Doesn’t shout!", ok:false},
+        {t:"No shout!", ok:false}
+      ],
+      success:"Yes. Negative imperative = Don’t + base verb.",
+      clue:"Use Don’t + base verb."
+    },
+    {
+      id:"g_lets",
+      type:"mcq",
+      section:"Grammar",
+      qtype:"Let’s",
+      prompt:"Choose the correct suggestion.",
+      sentence:"(You want to suggest going home.)",
+      choices:[
+        {t:"Let’s go home.", ok:true},
+        {t:"Let’s goes home.", ok:false},
+        {t:"Let’s to go home.", ok:false},
+        {t:"Let us going home.", ok:false}
+      ],
+      success:"Correct. Let’s + base verb.",
+      clue:"After Let’s, use the base verb: go / play / make."
+    },
+    {
+      id:"g_obj_pronoun1",
+      type:"mcq",
+      section:"Grammar",
+      qtype:"Object pronouns",
+      prompt:"Choose the correct sentence.",
+      sentence:"(You want to say: Can you help Anna?)",
+      choices:[
+        {t:"Can you help her?", ok:true},
+        {t:"Can you help she?", ok:false},
+        {t:"Can you help hers?", ok:false},
+        {t:"Can you help shes?", ok:false}
+      ],
+      success:"Correct. After a verb, use an object pronoun.",
+      clue:"After help / see / call / look at, use me / him / her / us / them."
+    },
+    {
+      id:"g_obj_pronoun2",
+      type:"mcq",
+      section:"Grammar",
+      qtype:"Object pronouns",
+      prompt:"Choose the correct sentence.",
+      sentence:"Tom and Ben are here. I can see ____.",
+      choices:[
+        {t:"them", ok:true},
+        {t:"they", ok:false},
+        {t:"their", ok:false},
+        {t:"theirs", ok:false}
+      ],
+      success:"Yes. After a verb, use them.",
+      clue:"They = subject. Them = object."
+    },
+    {
+      id:"g_ps_meaning1",
+      type:"mcq",
+      section:"Grammar",
+      qtype:"Present simple meaning",
+      prompt:"“I brush my teeth every morning.” This is a:",
+      sentence:"",
+      choices:[
+        {t:"routine", ok:true},
+        {t:"command", ok:false},
+        {t:"question", ok:false},
+        {t:"suggestion", ok:false}
+      ],
+      success:"Correct. This is a routine.",
+      clue:"Every morning = something we do again and again."
+    },
+    {
+      id:"g_ps_meaning2",
+      type:"mcq",
+      section:"Grammar",
+      qtype:"Present simple meaning",
+      prompt:"“Cats drink milk.” This is a:",
+      sentence:"",
+      choices:[
+        {t:"fact", ok:true},
+        {t:"recipe step", ok:false},
+        {t:"school rule", ok:false},
+        {t:"suggestion", ok:false}
+      ],
+      success:"Correct. This is a fact/general truth.",
+      clue:"Present simple can talk about facts and general truths."
+    },
+    {
+      id:"g_ps_pattern1",
+      type:"mcq",
+      section:"Grammar",
+      qtype:"Present simple form",
+      prompt:"Choose the correct sentence.",
+      sentence:"(Talking about he)",
+      choices:[
+        {t:"He plays football after school.", ok:true},
+        {t:"He play football after school.", ok:false},
+        {t:"He playing football after school.", ok:false},
+        {t:"He is play football after school.", ok:false}
+      ],
+      success:"Correct. He/She/It → usually add -s.",
+      clue:"For he / she / it, the verb usually needs -s."
+    },
+    {
+      id:"g_ps_pattern2",
+      type:"mcq",
+      section:"Grammar",
+      qtype:"Present simple form",
+      prompt:"Choose the correct sentence.",
+      sentence:"(Talking about they)",
+      choices:[
+        {t:"They walk to school.", ok:true},
+        {t:"They walks to school.", ok:false},
+        {t:"They walking to school.", ok:false},
+        {t:"They are walk to school.", ok:false}
+      ],
+      success:"Correct. I/You/We/They use the base verb.",
+      clue:"Only he / she / it usually takes -s."
+    },
+    {
+      id:"g_ps_spelling1",
+      type:"mcq",
+      section:"Grammar",
+      qtype:"3rd person spelling",
+      prompt:"Choose the correct form.",
+      sentence:"Tom ____ TV after dinner.",
+      choices:[
+        {t:"watches", ok:true},
+        {t:"watchs", ok:false},
+        {t:"watch", ok:false},
+        {t:"watcheses", ok:false}
+      ],
+      success:"Correct. watch → watches.",
+      clue:"After ch / sh / x / s / o, we usually add -es."
+    },
+    {
+      id:"g_ps_spelling2",
+      type:"mcq",
+      section:"Grammar",
+      qtype:"3rd person spelling",
+      prompt:"Choose the correct form.",
+      sentence:"My sister ____ her homework every night.",
+      choices:[
+        {t:"does", ok:true},
+        {t:"dos", ok:false},
+        {t:"do", ok:false},
+        {t:"doses", ok:false}
+      ],
+      success:"Correct. do → does.",
+      clue:"do / go often become does / goes."
+    }
+  ];
 
-{
-q:"Teacher says: ______ your books on page 10.",
-options:[
-"Open",
-"Opens",
-"Opening"
-],
-answer:0
-},
+  // ---------------------------
+  // SENTENCE TASKS
+  // ---------------------------
+  const sentenceTasks = [
+    {
+      id:"t_unscramble1",
+      type:"tile",
+      section:"Sentence Tasks",
+      qtype:"Unscramble the sentence (click words)",
+      prompt:"Click the words in the correct order.",
+      target:["Don’t","touch","it","."],
+      tiles:["it",".","Don’t","touch"],
+      success:"Correct. Negative imperative = Don’t + verb.",
+      clue:"Start with Don’t. Then add the base verb."
+    },
+    {
+      id:"t_unscramble2",
+      type:"tile",
+      section:"Sentence Tasks",
+      qtype:"Unscramble the sentence (click words)",
+      prompt:"Click the words in the correct order.",
+      target:["She","goes","to","school","every","day","."],
+      tiles:["every","goes","She",".","to","school","day"],
+      success:"Correct. She → goes.",
+      clue:"Start with the subject. Then use the correct verb form."
+    },
+    {
+      id:"t_find_mistake1",
+      type:"mistake",
+      section:"Sentence Tasks",
+      qtype:"Find the mistake (replace the wrong word)",
+      prompt:"Click the one wrong word. Then choose the correct word to replace it.",
+      sentenceWords:["Please","to","sit","down","."],
+      wrongIndex:1,
+      replacements:["sit","don’t","look","go"],
+      correctSentence:"Please sit down.",
+      correctWords:["Please","sit","sit","down","."],
+      success:"Correct. Imperatives use the base verb, not to + verb.",
+      clue:"Commands usually use the base verb: Sit down. Open the book."
+    },
+    {
+      id:"t_find_mistake2",
+      type:"mistake",
+      section:"Sentence Tasks",
+      qtype:"Find the mistake (replace the wrong word)",
+      prompt:"Click the one wrong word. Then choose the correct word to replace it.",
+      sentenceWords:["He","play","football","after","school","."],
+      wrongIndex:1,
+      replacements:["plays","playing","played","is"],
+      correctSentence:"He plays football after school.",
+      correctWords:["He","plays","football","after","school","."],
+      success:"Correct. He/She/It → add -s.",
+      clue:"For he / she / it, the verb usually needs -s."
+    }
+  ];
 
-{
-q:"Choose the correct negative imperative:",
-options:[
-"Don’t touch that!",
-"Not touch that!",
-"Doesn’t touch that!"
-],
-answer:0
-},
+  const ALL = [...vocabMCQ, ...spelling, ...grammar, ...sentenceTasks];
 
-{
-q:"I brush my teeth every morning. This is a:",
-options:[
-"habit",
-"order",
-"question"
-],
-answer:0
-},
+  // ---------- STATE ----------
+  let idx = 0;
+  let score = 0;
+  let correct = 0;
+  let timer = TOTAL_TIME_SEC;
+  let timerHandle = null;
 
-{
-q:"The sun rises in the east. This is a:",
-options:[
-"fact",
-"habit",
-"command"
-],
-answer:0
-},
+  const wrongIds = new Set();
+  const wrongWords = new Set();
+  const wrongGrammar = new Set();
+  const attempts = new Map();
 
-{
-q:"She ______ to school every day.",
-options:[
-"go",
-"goes",
-"going"
-],
-answer:1
-},
+  let sequence = ALL.slice();
+  let reviewMode = false;
 
-{
-q:"Tom ______ football after school.",
-options:[
-"play",
-"plays",
-"playing"
-],
-answer:1
-},
+  // ---------- DOM ----------
+  const sectionTitle = document.getElementById("sectionTitle");
+  const sectionTag = document.getElementById("sectionTag");
+  const cardArea = document.getElementById("cardArea");
+  const doneBox = document.getElementById("doneBox");
 
-{
-q:"Choose the correct sentence:",
-options:[
-"He walk to school.",
-"He walks to school.",
-"He walking to school."
-],
-answer:1
-},
+  const progTxt = document.getElementById("progTxt");
+  const scoreTxt = document.getElementById("scoreTxt");
+  const timeTxt = document.getElementById("timeTxt");
+  const progBar = document.getElementById("progBar");
 
-{
-q:"Which sentence gives a suggestion?",
-options:[
-"Let’s watch TV.",
-"Watch TV.",
-"Don’t watch TV."
-],
-answer:0
-}
+  const taskTxt = document.getElementById("taskTxt");
+  const correctTxt = document.getElementById("correctTxt");
+  const totalTxt = document.getElementById("totalTxt");
 
-];
+  const reviewWrongBtn = document.getElementById("reviewWrongBtn");
+  const restartBtn = document.getElementById("restartBtn");
 
-let current = 0;
-let score = 0;
+  const endMsg = document.getElementById("endMsg");
+  const reviewBox = document.getElementById("reviewBox");
 
-function loadQuestion(){
+  // ---------- HELPERS ----------
+  function shuffle(arr){
+    const a = arr.slice();
+    for (let i=a.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [a[i],a[j]]=[a[j],a[i]];
+    }
+    return a;
+  }
+  function formatTime(sec){
+    const m = String(Math.floor(sec/60)).padStart(2,"0");
+    const s = String(sec%60).padStart(2,"0");
+    return `${m}:${s}`;
+  }
+  function escapeHtml(s){
+    return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");
+  }
 
-let q = quiz[current];
+  function setProgressUI(){
+    progTxt.textContent = `${idx+1}/${sequence.length}`;
+    scoreTxt.textContent = String(score);
+    correctTxt.textContent = String(correct);
+    totalTxt.textContent = String(sequence.length);
+    progBar.style.width = `${(idx/sequence.length)*100}%`;
+    timeTxt.textContent = reviewMode ? "Review" : formatTime(timer);
+  }
 
-let html = `
-<div class="question">${current+1}. ${q.q}</div>
-<div class="options">
-`;
+  function extractWordFromId(id){
+    return id.replace("v_","").replaceAll("_"," ");
+  }
 
-q.options.forEach((opt,i)=>{
+  function markWrong(item){
+    wrongIds.add(item.id);
+    if (item.id.startsWith("v_")) wrongWords.add(extractWordFromId(item.id));
+    if (item.id.startsWith("s_")) wrongWords.add(item.word);
+    if (item.id.startsWith("g_")) wrongGrammar.add(item.qtype);
+    if (item.id.startsWith("t_")) wrongGrammar.add(item.qtype);
+  }
 
-html += `<button onclick="checkAnswer(${i})">${opt}</button>`
+  function stopTimer(){
+    if (timerHandle){ clearInterval(timerHandle); timerHandle = null; }
+  }
 
-});
+  function startTimer(){
+    stopTimer();
+    timeTxt.textContent = formatTime(timer);
+    timerHandle = setInterval(() => {
+      timer--;
+      if (timer < 0) timer = 0;
+      if (!reviewMode) timeTxt.textContent = formatTime(timer);
+      if (timer === 0){
+        stopTimer();
+        showDone(true);
+      }
+    }, 1000);
+  }
 
-html += "</div>";
+  function showDone(timeUp=false){
+    cardArea.style.display = "none";
+    doneBox.style.display = "block";
+    sectionTitle.textContent = timeUp ? "Time’s up!" : "Finished!";
+    sectionTag.textContent = timeUp ? "Stop here" : "Nice work";
+    taskTxt.textContent = timeUp ? "Time limit reached" : "Completed";
 
-document.getElementById("questionBox").innerHTML = html;
+    const total = sequence.length;
+    endMsg.innerHTML = `You got <b>${correct}</b> correct out of <b>${total}</b>.`;
 
-}
+    const vocabToReview = Array.from(wrongWords);
+    const grammarToReview = Array.from(wrongGrammar);
 
-function checkAnswer(i){
+    let html = "";
+    if (vocabToReview.length === 0 && grammarToReview.length === 0){
+      html += `<b>Review:</b> Nothing to review today. Great job.`;
+    } else {
+      html += `<b>Review reminder:</b> Before written homework, review these:`;
+      if (vocabToReview.length){
+        html += `<div style="margin-top:10px;"><b>Vocabulary / Spelling</b></div><div class="chips">` +
+          vocabToReview.map(w => `<span class="chip">${escapeHtml(w)}</span>`).join("") +
+          `</div>`;
+      }
+      if (grammarToReview.length){
+        html += `<div style="margin-top:12px;"><b>Grammar / Sentences</b></div><div class="chips">` +
+          grammarToReview.map(w => `<span class="chip">${escapeHtml(w)}</span>`).join("") +
+          `</div>`;
+      }
+      html += `<div style="margin-top:12px;">Tip: Say 2 examples out loud before you write.</div>`;
+    }
+    reviewBox.innerHTML = html;
+    progBar.style.width = `100%`;
+  }
 
-if(i === quiz[current].answer){
-score++;
-}
+  function next(){
+    idx++;
+    if (idx >= sequence.length){
+      stopTimer();
+      showDone(false);
+      return;
+    }
+    render();
+  }
 
-}
+  // ---------- RENDER MCQ ----------
+  function renderMCQ(item){
+    sectionTitle.textContent = item.section;
+    sectionTag.textContent = item.qtype;
 
-function nextQuestion(){
+    const id = item.id;
+    attempts.set(id, attempts.get(id) || 0);
 
-current++;
+    cardArea.innerHTML = `
+      <div class="qtype">${item.qtype}</div>
+      <div class="prompt">${item.prompt}</div>
+      <div class="sentence">${item.sentence || ""}</div>
 
-if(current >= quiz.length){
+      <div class="choices" id="choices"></div>
 
-document.getElementById("questionBox").innerHTML="";
-document.getElementById("result").innerHTML =
-"Score: "+score+" / "+quiz.length;
+      <div class="emojiRow" id="emojiRow"></div>
+      <div class="feedback" id="fb"><span class="hint">Click an answer. If wrong, you will get a clue.</span></div>
 
-}else{
+      <div class="controls">
+        <button class="smallbtn secondary" id="hintBtn">Hint</button>
+        <button class="smallbtn" id="nextBtn" disabled>Next</button>
+      </div>
+    `;
 
-loadQuestion();
+    const choicesDiv = document.getElementById("choices");
+    const fb = document.getElementById("fb");
+    const emojiRow = document.getElementById("emojiRow");
+    const hintBtn = document.getElementById("hintBtn");
+    const nextBtn = document.getElementById("nextBtn");
 
-}
+    const shuffled = shuffle(item.choices);
+    let lockedCorrect = false;
 
-}
+    function setSmileys(level){
+      if (level <= 0) emojiRow.textContent = "";
+      else if (level === 1) emojiRow.textContent = "🙂";
+      else if (level === 2) emojiRow.textContent = "🙂🙂";
+      else emojiRow.textContent = "😄😄😄";
+    }
 
-loadQuestion();
+    function showClue(){
+      fb.innerHTML = `<span class="hint"><b>Clue:</b> ${item.clue}</span>`;
+    }
 
+    shuffled.forEach(ch => {
+      const btn = document.createElement("button");
+      btn.className = "choice";
+      btn.innerHTML = ch.t;
+
+      btn.addEventListener("click", () => {
+        if (lockedCorrect) return;
+
+        attempts.set(id, (attempts.get(id) || 0) + 1);
+        const a = attempts.get(id);
+
+        if (ch.ok){
+          lockedCorrect = true;
+          btn.classList.add("correct");
+          [...choicesDiv.querySelectorAll("button")].forEach(b => b.disabled = true);
+
+          fb.innerHTML = `<span class="good"><b>Correct!</b></span> ${item.success || ""}`;
+          setSmileys(a === 1 ? 3 : a === 2 ? 2 : 1);
+
+          score += 1;
+          correct += 1;
+          nextBtn.disabled = false;
+        } else {
+          btn.classList.add("wrong");
+          setSmileys(0);
+          markWrong(item);
+          showClue();
+        }
+
+        setProgressUI();
+      });
+
+      choicesDiv.appendChild(btn);
+    });
+
+    hintBtn.addEventListener("click", () => {
+      attempts.set(id, (attempts.get(id) || 0) + 1);
+      markWrong(item);
+      showClue();
+      setProgressUI();
+    });
+
+    nextBtn.addEventListener("click", () => next());
+
+    taskTxt.textContent = item.section;
+  }
+
+  // ---------- RENDER SPELLING ----------
+  function renderSpell(item){
+    sectionTitle.textContent = item.section;
+    sectionTag.textContent = item.qtype;
+
+    const id = item.id;
+    attempts.set(id, attempts.get(id) || 0);
+
+    const word = item.word.toUpperCase();
+    const letters = shuffle(word.split(""));
+
+    cardArea.innerHTML = `
+      <div class="qtype">${item.qtype}</div>
+      <div class="prompt">Build the word: <b>${"•".repeat(word.length)}</b></div>
+      <div class="sentence">Hint: ${item.hint || ""}</div>
+
+      <div class="answerBox" id="answerBox"><span class="ghost">Click letters to build the word…</span></div>
+      <div class="tileRow" id="letters"></div>
+
+      <div class="emojiRow" id="emojiRow"></div>
+      <div class="feedback" id="fb"><span class="hint">When you finish, click <b>Check</b>.</span></div>
+
+      <div class="controls">
+        <button class="smallbtn secondary" id="resetBuildBtn">Reset</button>
+        <button class="smallbtn secondary" id="checkBtn">Check</button>
+        <button class="smallbtn" id="nextBtn" disabled>Next</button>
+      </div>
+    `;
+
+    const lettersDiv = document.getElementById("letters");
+    const answerBox = document.getElementById("answerBox");
+    const fb = document.getElementById("fb");
+    const emojiRow = document.getElementById("emojiRow");
+    const resetBuildBtn = document.getElementById("resetBuildBtn");
+    const checkBtn = document.getElementById("checkBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    let built = [];
+    let used = new Array(letters.length).fill(false);
+    let checked = false;
+
+    function setSmileys(level){
+      if (level <= 0) emojiRow.textContent = "";
+      else if (level === 1) emojiRow.textContent = "🙂";
+      else if (level === 2) emojiRow.textContent = "🙂🙂";
+      else emojiRow.textContent = "😄😄😄";
+    }
+
+    function refreshAnswer(){
+      answerBox.innerHTML = "";
+      if (built.length === 0){
+        const sp = document.createElement("span");
+        sp.className = "ghost";
+        sp.textContent = "Click letters to build the word…";
+        answerBox.appendChild(sp);
+      } else {
+        built.forEach(ch => {
+          const t = document.createElement("span");
+          t.className = "tile selected";
+          t.textContent = ch;
+          answerBox.appendChild(t);
+        });
+      }
+    }
+
+    letters.forEach((ch, i) => {
+      const t = document.createElement("div");
+      t.className = "tile";
+      t.textContent = ch;
+      t.addEventListener("click", () => {
+        if (checked) return;
+        if (used[i]) return;
+        used[i] = true;
+        built.push(ch);
+        t.classList.add("selected");
+        refreshAnswer();
+      });
+      lettersDiv.appendChild(t);
+    });
+
+    resetBuildBtn.addEventListener("click", () => {
+      if (checked) return;
+      built = [];
+      used = used.map(()=>false);
+      setSmileys(0);
+      fb.innerHTML = `<span class="hint">Click letters to build the word, then press <b>Check</b>.</span>`;
+      [...lettersDiv.querySelectorAll(".tile")].forEach(x => x.classList.remove("selected"));
+      refreshAnswer();
+    });
+
+    checkBtn.addEventListener("click", () => {
+      if (checked) return;
+      attempts.set(id, (attempts.get(id) || 0) + 1);
+
+      const attempt = built.join("");
+      if (attempt.length !== word.length){
+        markWrong(item);
+        fb.innerHTML = `<span class="hint"><b>Clue:</b> You need <b>${word.length}</b> letters. You have <b>${attempt.length}</b>.</span>`;
+        setProgressUI();
+        return;
+      }
+
+      checked = true;
+      [...lettersDiv.querySelectorAll(".tile")].forEach(x => x.style.pointerEvents="none");
+
+      if (attempt === word){
+        score += 1; correct += 1;
+        const a = attempts.get(id);
+        setSmileys(a === 1 ? 3 : a === 2 ? 2 : 1);
+        fb.innerHTML = `<span class="good"><b>Correct!</b></span> Spelling: <b>${word}</b>`;
+        nextBtn.disabled = false;
+      } else {
+        markWrong(item);
+        setSmileys(0);
+        fb.innerHTML = `<span class="bad"><b>Not yet.</b></span> <span class="hint">Check the order carefully. Try again.</span>`;
+        setTimeout(() => renderSpell(item), 900);
+      }
+
+      setProgressUI();
+    });
+
+    nextBtn.addEventListener("click", () => next());
+
+    taskTxt.textContent = "Spelling";
+  }
+
+  // ---------- RENDER TILE UNSCRAMBLE ----------
+  function renderTile(item){
+    sectionTitle.textContent = item.section;
+    sectionTag.textContent = item.qtype;
+
+    const id = item.id;
+    attempts.set(id, attempts.get(id) || 0);
+
+    const tiles = shuffle(item.tiles);
+
+    cardArea.innerHTML = `
+      <div class="qtype">${item.qtype}</div>
+      <div class="prompt">${item.prompt}</div>
+
+      <div class="answerBox" id="answerBox"><span class="ghost">Click words to build the sentence…</span></div>
+      <div class="tileRow" id="tiles"></div>
+
+      <div class="emojiRow" id="emojiRow"></div>
+      <div class="feedback" id="fb"><span class="hint">When you finish, click <b>Check</b>.</span></div>
+
+      <div class="controls">
+        <button class="smallbtn secondary" id="resetBtn">Reset</button>
+        <button class="smallbtn secondary" id="checkBtn">Check</button>
+        <button class="smallbtn" id="nextBtn" disabled>Next</button>
+      </div>
+    `;
+
+    const tilesDiv = document.getElementById("tiles");
+    const answerBox = document.getElementById("answerBox");
+    const fb = document.getElementById("fb");
+    const emojiRow = document.getElementById("emojiRow");
+    const resetBtn = document.getElementById("resetBtn");
+    const checkBtn = document.getElementById("checkBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    let built = [];
+    let chosen = [];
+
+    function setSmileys(level){
+      if (level <= 0) emojiRow.textContent = "";
+      else if (level === 1) emojiRow.textContent = "🙂";
+      else if (level === 2) emojiRow.textContent = "🙂🙂";
+      else emojiRow.textContent = "😄😄😄";
+    }
+
+    function refresh(){
+      answerBox.innerHTML = "";
+      if (built.length === 0){
+        const sp = document.createElement("span");
+        sp.className = "ghost";
+        sp.textContent = "Click words to build the sentence…";
+        answerBox.appendChild(sp);
+      } else {
+        built.forEach(w => {
+          const t = document.createElement("span");
+          t.className = "tile selected";
+          t.textContent = w;
+          answerBox.appendChild(t);
+        });
+      }
+    }
+
+    tiles.forEach((w, i) => {
+      const t = document.createElement("div");
+      t.className = "tile";
+      t.textContent = w;
+      t.addEventListener("click", () => {
+        if (chosen[i]) return;
+        chosen[i] = true;
+        built.push(w);
+        t.classList.add("selected");
+        refresh();
+      });
+      tilesDiv.appendChild(t);
+    });
+
+    resetBtn.addEventListener("click", () => {
+      built = []; chosen = [];
+      setSmileys(0);
+      fb.innerHTML = `<span class="hint">Try again. Tip: start with the capital word.</span>`;
+      [...tilesDiv.querySelectorAll(".tile")].forEach(x => x.classList.remove("selected"));
+      refresh();
+    });
+
+    checkBtn.addEventListener("click", () => {
+      attempts.set(id, (attempts.get(id) || 0) + 1);
+      const ok = built.join(" ") === item.target.join(" ");
+      if (ok){
+        score += 1; correct += 1;
+        const a = attempts.get(id);
+        setSmileys(a === 1 ? 3 : a === 2 ? 2 : 1);
+        fb.innerHTML = `<span class="good"><b>Correct!</b></span> ${item.success || ""}`;
+        nextBtn.disabled = false;
+      } else {
+        markWrong(item);
+        setSmileys(0);
+        fb.innerHTML = `<span class="bad"><b>Not yet.</b></span> <span class="hint">${item.clue || "Check the order carefully."}</span>`;
+      }
+      setProgressUI();
+    });
+
+    nextBtn.addEventListener("click", () => next());
+
+    taskTxt.textContent = "Sentence Tasks";
+  }
+
+  // ---------- RENDER FIND MISTAKE ----------
+  function renderMistake(item){
+    sectionTitle.textContent = item.section;
+    sectionTag.textContent = item.qtype;
+
+    const id = item.id;
+    attempts.set(id, attempts.get(id) || 0);
+
+    let words = item.sentenceWords.slice();
+    let pickedWrong = false;
+    let chosenReplacement = null;
+    let lockedCorrect = false;
+
+    cardArea.innerHTML = `
+      <div class="qtype">${item.qtype}</div>
+      <div class="prompt">${item.prompt}</div>
+
+      <div class="tileRow" id="words"></div>
+
+      <div class="reviewBox" id="replaceBox" style="display:none;">
+        <b>Replace with:</b>
+        <div class="tileRow" id="replaceChoices" style="margin-top:10px;"></div>
+        <div class="controls" style="margin-top:14px;">
+          <button class="smallbtn secondary" id="checkBtn" disabled>Check</button>
+        </div>
+      </div>
+
+      <div class="emojiRow" id="emojiRow"></div>
+      <div class="feedback" id="fb"><span class="hint">Click the wrong word first.</span></div>
+
+      <div class="controls">
+        <button class="smallbtn secondary" id="hintBtn">Hint</button>
+        <button class="smallbtn" id="nextBtn" disabled>Next</button>
+      </div>
+    `;
+
+    const wordsDiv = document.getElementById("words");
+    const replaceBox = document.getElementById("replaceBox");
+    const replaceChoices = document.getElementById("replaceChoices");
+    const checkBtn = document.getElementById("checkBtn");
+    const fb = document.getElementById("fb");
+    const emojiRow = document.getElementById("emojiRow");
+    const hintBtn = document.getElementById("hintBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    function setSmileys(level){
+      if (level <= 0) emojiRow.textContent = "";
+      else if (level === 1) emojiRow.textContent = "🙂";
+      else if (level === 2) emojiRow.textContent = "🙂🙂";
+      else emojiRow.textContent = "😄😄😄";
+    }
+
+    function renderWords(){
+      wordsDiv.innerHTML = "";
+      words.forEach((w, i) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "tile";
+        btn.textContent = w;
+
+        btn.addEventListener("click", () => {
+          if (lockedCorrect) return;
+
+          if (!pickedWrong){
+            attempts.set(id, (attempts.get(id) || 0) + 1);
+
+            if (i === item.wrongIndex){
+              pickedWrong = true;
+              btn.classList.add("selected");
+              fb.innerHTML = `<span class="good"><b>Good catch.</b></span> Now choose the correct word to replace it.`;
+              replaceBox.style.display = "block";
+              renderReplacementChoices();
+            } else {
+              markWrong(item);
+              setSmileys(0);
+              fb.innerHTML = `<span class="hint"><b>Try again:</b> ${item.clue}</span>`;
+            }
+
+            setProgressUI();
+          }
+        });
+
+        wordsDiv.appendChild(btn);
+      });
+    }
+
+    function renderReplacementChoices(){
+      replaceChoices.innerHTML = "";
+      item.replacements.forEach(rep => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "tile";
+        b.textContent = rep;
+
+        b.addEventListener("click", () => {
+          if (lockedCorrect) return;
+          chosenReplacement = rep;
+
+          [...replaceChoices.querySelectorAll(".tile")].forEach(x => x.classList.remove("selected"));
+          b.classList.add("selected");
+
+          words[item.wrongIndex] = rep;
+          renderWords();
+
+          checkBtn.disabled = false;
+          fb.innerHTML = `<span class="hint">Now click <b>Check</b>.</span>`;
+        });
+
+        replaceChoices.appendChild(b);
+      });
+    }
+
+    checkBtn.addEventListener("click", () => {
+      if (lockedCorrect) return;
+
+      attempts.set(id, (attempts.get(id) || 0) + 1);
+
+      const ok = Array.isArray(item.correctWords) && (words.join(" ") === item.correctWords.join(" "));
+      if (ok){
+        lockedCorrect = true;
+        score += 1; correct += 1;
+
+        const a = attempts.get(id);
+        setSmileys(a === 1 ? 3 : a === 2 ? 2 : 1);
+
+        fb.innerHTML = `<span class="good"><b>Correct!</b></span> ${item.success || ""}<br/>
+                        ✅ <b>${item.correctSentence}</b>`;
+        nextBtn.disabled = false;
+      } else {
+        markWrong(item);
+        setSmileys(0);
+        fb.innerHTML = `<span class="bad"><b>Not yet.</b></span> <span class="hint">Read the clue and choose again.</span><br/>
+                        <span class="hint"><b>Clue:</b> ${item.clue}</span>`;
+      }
+
+      setProgressUI();
+    });
+
+    hintBtn.addEventListener("click", () => {
+      attempts.set(id, (attempts.get(id) || 0) + 1);
+      markWrong(item);
+      fb.innerHTML = `<span class="hint"><b>Hint:</b> ${item.clue}</span>`;
+      setProgressUI();
+    });
+
+    nextBtn.addEventListener("click", () => next());
+
+    taskTxt.textContent = "Sentence Tasks";
+    renderWords();
+  }
+
+  function render(){
+    doneBox.style.display = "none";
+    cardArea.style.display = "block";
+
+    const item = sequence[idx];
+    if (!item){ showDone(false); return; }
+
+    setProgressUI();
+
+    if (item.type === "mcq") renderMCQ(item);
+    else if (item.type === "spell") renderSpell(item);
+    else if (item.type === "tile") renderTile(item);
+    else if (item.type === "mistake") renderMistake(item);
+    else renderMCQ(item);
+  }
+
+  // ---------- REVIEW MODE ----------
+  reviewWrongBtn.addEventListener("click", () => {
+    const wrongList = ALL.filter(it => wrongIds.has(it.id));
+    if (wrongList.length === 0){
+      alert("Nothing to review. Great job!");
+      return;
+    }
+    reviewMode = true;
+    sequence = wrongList;
+    idx = 0;
+    score = 0; correct = 0;
+    stopTimer();
+    timeTxt.textContent = "Review";
+    doneBox.style.display = "none";
+    cardArea.style.display = "block";
+    render();
+  });
+
+  // ---------- RESTART ----------
+  restartBtn.addEventListener("click", () => {
+    idx = 0; score = 0; correct = 0;
+    timer = TOTAL_TIME_SEC;
+    wrongIds.clear(); wrongWords.clear(); wrongGrammar.clear();
+    attempts.clear();
+    reviewMode = false;
+    sequence = ALL.slice();
+    doneBox.style.display = "none";
+    cardArea.style.display = "block";
+    render();
+    startTimer();
+  });
+
+  // ---------- INIT ----------
+  totalTxt.textContent = String(ALL.length);
+  render();
+  startTimer();
+})();
 </script>
-
 </body>
 </html>
